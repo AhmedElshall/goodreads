@@ -1,27 +1,58 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
+//! containers
+import AdminPanel from "./containers/Admin/AdminPanel/AdminPanel";
+import User from "./containers/User/User";
+
+//! Pages
+import Categories from "./Pages/User/Categories/Categories";
+import Books from "./Pages/User/Books/Books";
+import Authors from "./Pages/User/Authors/Authors";
+
+//! components
+import Navbar from "./components/Navbar/Navbar";
+
+import "./App.css";
 
 class App extends Component {
+  state = {
+    isAdmin: false,
+    isUser: true
+  };
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+    if (this.state.isUser) {
+      return (
+        <BrowserRouter>
+          <React.Fragment>
+            <Navbar />
+            <div className="App">
+              <Switch>
+                {/* <Redirect from="/" to="/home" exact /> */}
+                <Route path="/" exact component={User} />
+                <Route path="/categories" component={Categories} />
+                <Route path="/books" component={Books} />
+                <Route path="/authors" component={Authors} />
+              </Switch>
+            </div>
+          </React.Fragment>
+        </BrowserRouter>
+      );
+    }
+
+    if (this.state.isAdmin) {
+      return (
+        <BrowserRouter>
+          <div className="App">
+            <Switch>
+              {/* <Redirect from="/" to="/admin" exact /> */}
+              <Route path="/admin" component={AdminPanel} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      );
+    }
   }
 }
 
