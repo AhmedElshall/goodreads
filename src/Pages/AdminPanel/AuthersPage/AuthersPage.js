@@ -1,15 +1,46 @@
 import React from "react";
 
-// import styles from './AuthersPage.module.scss';
+ import styles from './AuthersPage.module.scss';
+ import Table from 'react-bootstrap/Table';
 
+ import AutherItem from "./AutherItem";
 const authers = props => {
   return (
-    <div>
-      <button onClick={props.categsShowed}>Categories</button>
-      <button onClick={props.booksShowed}>Books</button>
-      <button onClick={props.authersShowed}>Authers</button>
-      <h1>Authers Page</h1>
+    <div className={styles.CategoryPage} >
+    <div className={styles.CategoryPage} >
+    <Table responsive>
+  <thead>
+    <tr>
+      
+      <th>Id</th>
+      <th>photo</th>
+      <th>firstName</th>
+      <th>lastName</th>
+      <th>dateOfBirh</th>
+      <th>Actions</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+   {  
+     props.AutherList.map((element,index) =>(
+     < AutherItem key={(index).toString()}
+     
+      id={element.id}
+      photo= {element.photo} 
+      firstName={element.firstName}
+      lastName={element.lastName}
+      dateOfBirh={element.dateOfBirh}
+     />
+      
+  ))}
+  </tbody>
+  </Table>
+  </div>
+      
     </div>
+    
+    
   );
 };
 
