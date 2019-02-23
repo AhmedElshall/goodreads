@@ -122,7 +122,7 @@ class AdminPanel extends Component {
           onClickBooks={this.booksShowedHandler}
           onClickCategory={this.categsShowedHandler}
           ></AdminContent>
-        <Authers/>
+        <Authers AutherList={[...this.state.autherList]} />
       </div>
        
       );
