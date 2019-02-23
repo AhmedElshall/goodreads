@@ -3,15 +3,16 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 //! containers
 import AdminPanel from "./containers/Admin/AdminPanel/AdminPanel";
-import User from "./containers/User/User";
+// import User from "./containers/User/User";
 
 //! Pages
-import Categories from "./Pages/User/Categories/Categories";
-import Books from "./Pages/User/Books/Books";
-import Authors from "./Pages/User/Authors/Authors";
+// import Categories from "./Pages/User/Categories/Categories";
+// import Books from "./Pages/User/Books/Books";
+// import Authors from "./Pages/User/Authors/Authors";
+import HomePage from "./Pages/User/HomePage/HomePage";
 
 //! components
-import Navbar from "./components/Navbar/Navbar";
+// import Navbar from "./components/Navbar/Navbar";
 
 import "./App.css";
 
@@ -23,22 +24,7 @@ class App extends Component {
 
   render() {
     if (this.state.isUser) {
-      return (
-        <BrowserRouter>
-          <React.Fragment>
-            <Navbar />
-            <div className="App">
-              <Switch>
-                {/* <Redirect from="/" to="/home" exact /> */}
-                <Route path="/" exact component={User} />
-                <Route path="/categories" component={Categories} />
-                <Route path="/books" component={Books} />
-                <Route path="/authors" component={Authors} />
-              </Switch>
-            </div>
-          </React.Fragment>
-        </BrowserRouter>
-      );
+      return <HomePage />;
     }
 
     if (this.state.isAdmin) {

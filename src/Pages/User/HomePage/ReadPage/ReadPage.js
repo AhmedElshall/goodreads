@@ -1,8 +1,10 @@
 import React from "react";
+import Navbar from "../../../../components/Navbar/Navbar";
 
 const readPage = props => {
   return (
     <div>
+      <Navbar />
       <h1>Read Page</h1>
       <button onClick={props.allBooks}>All</button>
       <button onClick={props.read}>Read</button>
