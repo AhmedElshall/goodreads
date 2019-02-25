@@ -62,57 +62,57 @@ class User extends Component {
   };
 
   render() {
-    //! all books page
-    if (this.state.allBooksShowed && this.state.isLogged) {
-      return (
-        <AllBooksPage
-          allBooks={this.allBooksShowedHandler}
-          read={this.readShowedHandler}
-          currentlyRead={this.currentlyReadShowedHandler}
-          toRead={this.wantToReadShowedHandler}
-        />
-      );
-    }
-
-    //! read page
-    if (this.state.readShowed && this.state.isLogged) {
-      return (
-        <ReadPage
-          allBooks={this.allBooksShowedHandler}
-          read={this.readShowedHandler}
-          currentlyRead={this.currentlyReadShowedHandler}
-          toRead={this.wantToReadShowedHandler}
-        />
-      );
-    }
-
-    //! currently reading page
-    if (this.state.currentlyReadShowed && this.state.isLogged) {
-      return (
-        <CurrentlyReadPage
-          allBooks={this.allBooksShowedHandler}
-          read={this.readShowedHandler}
-          currentlyRead={this.currentlyReadShowedHandler}
-          toRead={this.wantToReadShowedHandler}
-        />
-      );
-    }
-
-    //! want to read page
-    if (this.state.wantToReadShowed && this.state.isLogged) {
-      return (
-        <WantToReadPage
-          allBooks={this.allBooksShowedHandler}
-          read={this.readShowedHandler}
-          currentlyRead={this.currentlyReadShowedHandler}
-          toRead={this.wantToReadShowedHandler}
-        />
-      );
-    }
-
     //! user login page
     if (!this.state.isLogged) {
       return <LoginPage logged={this.isLoggedHandler} />;
+    } else {
+      //! all books page
+      if (this.state.allBooksShowed) {
+        return (
+          <AllBooksPage
+            allBooks={this.allBooksShowedHandler}
+            read={this.readShowedHandler}
+            currentlyRead={this.currentlyReadShowedHandler}
+            toRead={this.wantToReadShowedHandler}
+          />
+        );
+      }
+
+      //! read page
+      if (this.state.readShowed) {
+        return (
+          <ReadPage
+            allBooks={this.allBooksShowedHandler}
+            read={this.readShowedHandler}
+            currentlyRead={this.currentlyReadShowedHandler}
+            toRead={this.wantToReadShowedHandler}
+          />
+        );
+      }
+
+      //! currently reading page
+      if (this.state.currentlyReadShowed) {
+        return (
+          <CurrentlyReadPage
+            allBooks={this.allBooksShowedHandler}
+            read={this.readShowedHandler}
+            currentlyRead={this.currentlyReadShowedHandler}
+            toRead={this.wantToReadShowedHandler}
+          />
+        );
+      }
+
+      //! want to read page
+      if (this.state.wantToReadShowed) {
+        return (
+          <WantToReadPage
+            allBooks={this.allBooksShowedHandler}
+            read={this.readShowedHandler}
+            currentlyRead={this.currentlyReadShowedHandler}
+            toRead={this.wantToReadShowedHandler}
+          />
+        );
+      }
     }
 
     // <BrowserRouter>

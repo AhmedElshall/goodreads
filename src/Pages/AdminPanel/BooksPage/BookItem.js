@@ -1,8 +1,7 @@
-
-import React from 'react';
-export default  function BookItem(props){
-   return(
-      <tr>
+import React from "react";
+export default function BookItem(props) {
+  return (
+    <tr>
       <td>{props.id}</td>
       <td>{props.photo}</td>
       <td>{props.name}</td>
@@ -10,12 +9,9 @@ export default  function BookItem(props){
       <td>{props.autherId}</td>
 
       <td>
-         <button> edit</button>
-         <button> delete</button>
-
+        <button> edit</button>
+        <button> delete</button>
       </td>
-    
     </tr>
-   );
-  
+  );
 }

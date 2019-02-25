@@ -9,8 +9,8 @@ import AdminContent from "../../../Pages/AdminPanel/AdminContent";
 
 class AdminPanel extends Component {
   state = {
-    username:'',
-    password:'',
+    username: "",
+    password: "",
     admin: {
       adminName: "mostafa"
     },
@@ -20,12 +20,33 @@ class AdminPanel extends Component {
     booksShowed: false,
     authersShowed: false,
 
-    bookList:[{id:1,photo:"photp",name:"Aerodynamics",categoryId:1,autherId:1},{id:1,photo:"photp",name:"Aerodynamics",categoryId:1,autherId:1}],
-    categoryList:[{id:1,name:"science"},{id:2,name:"it"}],
-    autherList:[{id:1,photo:"photp",firstName:"mohamed",lastName:"yasser",dateOfBirh:"1992"}],
+    bookList: [
+      {
+        id: 1,
+        photo: "photp",
+        name: "Aerodynamics",
+        categoryId: 1,
+        autherId: 1
+      },
+      {
+        id: 1,
+        photo: "photp",
+        name: "Aerodynamics",
+        categoryId: 1,
+        autherId: 1
+      }
+    ],
+    categoryList: [{ id: 1, name: "science" }, { id: 2, name: "it" }],
+    autherList: [
+      {
+        id: 1,
+        photo: "photp",
+        firstName: "mohamed",
+        lastName: "yasser",
+        dateOfBirh: "1992"
+      }
+    ]
   };
-
-
 
   categsShowedHandler = () => {
     this.setState({
@@ -51,87 +72,78 @@ class AdminPanel extends Component {
     });
   };
 
-  loginValidation =(event)=>{
+  loginValidation = event => {
     console.log("10");
-    this.setState({isLogged:true}); 
-    this.setState({categsShowed:true});
+    this.setState({ isLogged: true });
+    this.setState({ categsShowed: true });
     event.preventDefault();
-  }
+  };
 
-
-
-  onChangeUserName = (e)=>{
+  onChangeUserName = e => {
     console.log(e.target.value);
-    const temp=e.target.value;
-    this.setState({username:temp});
-      console.log(this.state.username);
-  }
-
-
-
+    const temp = e.target.value;
+    this.setState({ username: temp });
+    console.log(this.state.username);
+  };
 
   // onChangePassword =(e)=>{
   //   this.setState({password:e.target.value});
   //   console.log(this.state.password);
   // }
 
-
   render() {
-
     if (!this.state.isLogged) {
-      return <Login onSubmit={this.loginValidation}  onChangeUserName= {this.onChangeUserName} 
-      usernamwValue={this.state.username}
-      onChangePassword={this.onChangePassword}
-    // passwordValue
-      />;
-    }
-    else{
-        //! categories page
-    if (this.state.categsShowed ) {
       return (
-        <div>
-          <AdminContent
-          onClickBooks={this.booksShowedHandler}
-          onClickAuther={this.authersShowedHandler}
-          ></AdminContent>
-          <Categories categoryList={[...this.state.categoryList]}/>
-        </div>
-        
+        <Login
+          onSubmit={this.loginValidation}
+          onChangeUserName={this.onChangeUserName}
+          usernamwValue={this.state.username}
+          onChangePassword={this.onChangePassword}
+          // passwordValue
+        />
       );
+    } else {
+      //! categories page
+      if (this.state.categsShowed) {
+        return (
+          <div>
+            <AdminContent
+              onClickBooks={this.booksShowedHandler}
+              onClickAuther={this.authersShowedHandler}
+            />
+            <Categories categoryList={[...this.state.categoryList]} />
+          </div>
+        );
+      }
+
+      //! books page
+      else if (this.state.booksShowed) {
+        return (
+          <div>
+            <AdminContent
+              onClickCategory={this.categsShowedHandler}
+              onClickAuther={this.authersShowedHandler}
+            />
+            <Books BookList={[...this.state.bookList]} />
+          </div>
+        );
+      }
+
+      //! authers page
+      else if (this.state.authersShowed) {
+        return (
+          <div>
+            <AdminContent
+              onClickBooks={this.booksShowedHandler}
+              onClickCategory={this.categsShowedHandler}
+            />
+            <Authers AutherList={[...this.state.autherList]} />
+          </div>
+        );
+      }
     }
 
-    //! books page
-    else if (this.state.booksShowed ) {
-      return (
-        <div>
-         <AdminContent
-          onClickCategory={this.categsShowedHandler}
-          onClickAuther={this.authersShowedHandler}
-          ></AdminContent>
-        <Books BookList={[...this.state.bookList]} />
-      </div>
-     
-      );
-    }
-
-    //! authers page
-    else if(this.state.authersShowed) {
-      return (
-        <div>
-         <AdminContent
-          onClickBooks={this.booksShowedHandler}
-          onClickCategory={this.categsShowedHandler}
-          ></AdminContent>
-        <Authers AutherList={[...this.state.autherList]} />
-      </div>
-       
-      );
-    }
-
-    }
-    
     //! open loginPage by default
- 
   }
 }
 

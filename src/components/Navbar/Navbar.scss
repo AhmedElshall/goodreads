@@ -1,12 +1,11 @@
+@import "../../assets/_scssVariables/variables.scss";
 .main-nav {
   position: fixed;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 3.5rem;
-  background-color: salmon;
-  padding: 0 1rem;
-  display: flex;
+  width: 100%; // height: 3.5rem;
+  background-color: #f4f1e9;
+  padding: 0 1rem; // display: flex;
   align-items: center;
   &__logo h1 {
     margin: 0;
@@ -19,49 +18,28 @@
       list-style: none;
       padding: 0;
       margin: 0;
-    }
-    li {
-      margin: 0 1rem;
+      @media (max-width: $screen-sm-min) {
+        display: block;
+        li {
+          margin: 2px 0;
+          a {
+            border-radius: 10px;
+            display: block;
+            padding: 10px 10px;
+          }
+        }
+      }
     }
     a {
       text-decoration: none;
-      color: whitesmoke;
+      color: #3c2618;
+      padding: 25px 20px;
       &:hover,
       &:active,
       &.active {
-        color: yellow;
+        color: #fff;
+        background-color: #3c2618;
       }
     }
   }
 }
-
-// .main-nav__logo h1{
-//   margin: 0;
-//   font-size: 1.5rem;
-// }
-
-// .main-nav__items {
-//   margin-left: 1.5rem;
-// }
-
-// .main-nav__items ul {
-//   display: flex;
-//   list-style: none;
-//   padding: 0;
-//   margin: 0;
-// }
-
-// .main-nav__items li {
-//   margin: 0 1rem;
-// }
-
-// .main-nav__items a {
-//   text-decoration: none;
-//   color: whitesmoke;
-// }
-
-// .main-nav__items a:hover,
-// .main-nav__items a:active,
-// .main-nav__items a.active {
-//   color: yellow;
-// }
