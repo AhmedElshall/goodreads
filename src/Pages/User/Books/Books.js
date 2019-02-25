@@ -1,5 +1,8 @@
 import React from "react";
+
+//! components
 import Navbar from "../../../components/Navbar/Navbar";
+import Blocks from "../../../components/UserPages/Blocks/Blocks";
 
 const books = props => {
   return (
@@ -7,6 +10,7 @@ const books = props => {
       <Navbar />
       <main className="main-padding">
         <h1>Books Page</h1>
+        <Blocks />
       </main>
     </>
   );

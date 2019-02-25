@@ -19,7 +19,7 @@ const login = props => {
     <>
       <header className={styles.Header}>
         {/* //! navbar */}
-        <Navbar expand="lg">
+        <Navbar>
           <Container>
             <Navbar.Brand>
               <NavLink to="/" exact>
@@ -63,13 +63,36 @@ const login = props => {
                 <Form>
                   <h5>New here? Create a free account!</h5>
                   <Form.Group>
-                    <Form.Control type="text" placeholder="Name" />
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Your First Name"
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Your Last Name"
+                    />
                   </Form.Group>
                   <Form.Group controlId="formBasicEmail">
-                    <Form.Control type="email" placeholder="Email Address" />
+                    <Form.Control type="email" placeholder="Enter Your Email" />
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter Your Password"
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control
+                      className={styles.file}
+                      type="file"
+                      id="file"
+                    />
+                    <label for="file" class="form-control">
+                      Upload Your Image
+                      <span class="upload-ico" />
+                    </label>
                   </Form.Group>
                   <div className={styles.SignUp__btn}>
                     {/* //! */}
