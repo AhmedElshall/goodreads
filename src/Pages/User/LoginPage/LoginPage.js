@@ -16,7 +16,7 @@ import styles from "./LoginPage.module.scss";
 
 const login = props => {
   return (
-    <main>
+    <>
       <header className={styles.Header}>
         {/* //! navbar */}
         <Navbar expand="lg">
@@ -72,7 +72,12 @@ const login = props => {
                     <Form.Control type="password" placeholder="Password" />
                   </Form.Group>
                   <div className={styles.SignUp__btn}>
-                    <Button variant="primary" type="submit">
+                    {/* //! */}
+                    <Button
+                      onClick={props.logged}
+                      variant="primary"
+                      type="submit"
+                    >
                       Sign up
                     </Button>
                     <Form.Text className="text-muted">
@@ -113,7 +118,7 @@ const login = props => {
           </Row>
         </Container>
       </section>
-    </main>
+    </>
   );
 };
 
