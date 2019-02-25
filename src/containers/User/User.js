@@ -24,7 +24,6 @@ class User extends Component {
       allBooksShowed: true
     });
   };
-
   allBooksShowedHandler = () => {
     this.setState({
       allBooksShowed: true,
@@ -33,7 +32,6 @@ class User extends Component {
       wantToReadShowed: false
     });
   };
-
   readShowedHandler = () => {
     this.setState({
       allBooksShowed: false,
@@ -42,7 +40,6 @@ class User extends Component {
       wantToReadShowed: false
     });
   };
-
   currentlyReadShowedHandler = () => {
     this.setState({
       allBooksShowed: false,
@@ -51,7 +48,6 @@ class User extends Component {
       wantToReadShowed: false
     });
   };
-
   wantToReadShowedHandler = () => {
     this.setState({
       allBooksShowed: false,
@@ -60,11 +56,21 @@ class User extends Component {
       wantToReadShowed: true
     });
   };
+  /////////////////////////////////////////////////////////////////////
+  //! form validation
+  submitFormHandler = value => {
+    console.log(value);
+  };
 
   render() {
     //! user login page
     if (!this.state.isLogged) {
-      return <LoginPage logged={this.isLoggedHandler} />;
+      return (
+        <LoginPage
+          logged={this.isLoggedHandler}
+          submit={this.submitFormHandler}
+        />
+      );
     } else {
       //! all books page
       if (this.state.allBooksShowed) {

@@ -13,12 +13,12 @@ const Block = props => {
           width="150"
           height="150"
         />
-        <a href="#">
-          <p>{props.bookName}</p>
-        </a>
-        <a href="#">
-          <p>{props.auther}</p>
-        </a>
+        {/* <a href="#"> */}
+        <p>{props.bookName}</p>
+        {/* </a> */}
+        {/* <a href="#"> */}
+        <p>{props.auther}</p>
+        {/* </a> */}
       </div>
     </Col>
   );
