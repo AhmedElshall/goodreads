@@ -1,6 +1,8 @@
 @import "../../assets/_scssVariables/variables.scss";
 .main-nav {
   position: fixed;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%; // height: 3.5rem;
@@ -39,6 +41,44 @@
       &.active {
         color: #fff;
         background-color: #3c2618;
+      }
+    }
+    &__collapsed {
+      display: none;
+      @media (max-width: $screen-sm-max) {
+        display: block;
+      }
+    }
+  }
+  @media (max-width: $screen-sm-max) {
+    &__items {
+      display: none;
+      &__collapsed {
+        display: block;
+        display: flex;
+        justify-content: center;
+        min-height: 34px;
+        margin: 78px 0 0 0;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        ul {
+          display: flex;
+          li {
+            margin: 0;
+          }
+          a {
+            padding: 14px 20px;
+          }
+        }
+      }
+    }
+    form {
+      margin-left: auto;
+    }
+  }
+  @media (max-width: $screen-sm-min) {
+    &__items {
+      &__collapsed {
+        margin: 66px 0 0 0;
       }
     }
   }
