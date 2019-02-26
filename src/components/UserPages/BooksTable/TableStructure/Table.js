@@ -1,7 +1,14 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 
-const table = () => {
+import BookItem from "../BookItem/BookItem";
+
+const table = props => {
+  let renderedBooks = [];
+  renderedBooks =
+    props.bookState === "all"
+      ? [...props.books]
+      : props.books.filter(book => book.shelve === props.bookState);
   return (
     <Table striped bordered hover>
       <thead>
@@ -15,30 +22,17 @@ const table = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>@fat</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Larry the Bird</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-        </tr>
+        {renderedBooks.map((book, index) => (
+          <BookItem
+            key={index.toString()}
+            cover={book.cover}
+            name={book.name}
+            author={book.author}
+            avgRate={book.avgRate}
+            rating={book.avgRate}
+            shelve={book.shelve}
+          />
+        ))}
       </tbody>
     </Table>
   );

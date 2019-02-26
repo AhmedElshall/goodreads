@@ -11,10 +11,10 @@ class User extends Component {
   state = {
     isLogged: false,
     loginShowed: true,
-    allBooksShowed: false,
-    readShowed: false,
-    currentlyReadShowed: false,
-    wantToReadShowed: false
+    allBooksShowed: false
+    // readShowed: false,
+    // currentlyReadShowed: false,
+    // wantToReadShowed: false
   };
 
   isLoggedHandler = () => {
@@ -32,30 +32,30 @@ class User extends Component {
       wantToReadShowed: false
     });
   };
-  readShowedHandler = () => {
-    this.setState({
-      allBooksShowed: false,
-      readShowed: true,
-      currentlyReadShowed: false,
-      wantToReadShowed: false
-    });
-  };
-  currentlyReadShowedHandler = () => {
-    this.setState({
-      allBooksShowed: false,
-      readShowed: false,
-      currentlyReadShowed: true,
-      wantToReadShowed: false
-    });
-  };
-  wantToReadShowedHandler = () => {
-    this.setState({
-      allBooksShowed: false,
-      readShowed: false,
-      currentlyReadShowed: false,
-      wantToReadShowed: true
-    });
-  };
+  // readShowedHandler = () => {
+  //   this.setState({
+  //     allBooksShowed: false,
+  //     readShowed: true,
+  //     currentlyReadShowed: false,
+  //     wantToReadShowed: false
+  //   });
+  // };
+  // currentlyReadShowedHandler = () => {
+  //   this.setState({
+  //     allBooksShowed: false,
+  //     readShowed: false,
+  //     currentlyReadShowed: true,
+  //     wantToReadShowed: false
+  //   });
+  // };
+  // wantToReadShowedHandler = () => {
+  //   this.setState({
+  //     allBooksShowed: false,
+  //     readShowed: false,
+  //     currentlyReadShowed: false,
+  //     wantToReadShowed: true
+  //   });
+  // };
   /////////////////////////////////////////////////////////////////////
   //! form validation
   submitFormHandler = value => {
@@ -84,41 +84,41 @@ class User extends Component {
         );
       }
 
-      //! read page
-      if (this.state.readShowed) {
-        return (
-          <ReadPage
-            allBooks={this.allBooksShowedHandler}
-            read={this.readShowedHandler}
-            currentlyRead={this.currentlyReadShowedHandler}
-            toRead={this.wantToReadShowedHandler}
-          />
-        );
-      }
+      // //! read page
+      // else if (this.state.readShowed) {
+      //   return (
+      //     <ReadPage
+      //       allBooks={this.allBooksShowedHandler}
+      //       read={this.readShowedHandler}
+      //       currentlyRead={this.currentlyReadShowedHandler}
+      //       toRead={this.wantToReadShowedHandler}
+      //     />
+      //   );
+      // }
 
-      //! currently reading page
-      if (this.state.currentlyReadShowed) {
-        return (
-          <CurrentlyReadPage
-            allBooks={this.allBooksShowedHandler}
-            read={this.readShowedHandler}
-            currentlyRead={this.currentlyReadShowedHandler}
-            toRead={this.wantToReadShowedHandler}
-          />
-        );
-      }
+      // //! currently reading page
+      // else if (this.state.currentlyReadShowed) {
+      //   return (
+      //     <CurrentlyReadPage
+      //       allBooks={this.allBooksShowedHandler}
+      //       read={this.readShowedHandler}
+      //       currentlyRead={this.currentlyReadShowedHandler}
+      //       toRead={this.wantToReadShowedHandler}
+      //     />
+      //   );
+      // }
 
-      //! want to read page
-      if (this.state.wantToReadShowed) {
-        return (
-          <WantToReadPage
-            allBooks={this.allBooksShowedHandler}
-            read={this.readShowedHandler}
-            currentlyRead={this.currentlyReadShowedHandler}
-            toRead={this.wantToReadShowedHandler}
-          />
-        );
-      }
+      // //! want to read page
+      // else if (this.state.wantToReadShowed) {
+      //   return (
+      //     <WantToReadPage
+      //       allBooks={this.allBooksShowedHandler}
+      //       read={this.readShowedHandler}
+      //       currentlyRead={this.currentlyReadShowedHandler}
+      //       toRead={this.wantToReadShowedHandler}
+      //     />
+      //   );
+      // }
     }
 
     // <BrowserRouter>

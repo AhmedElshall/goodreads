@@ -1,6 +1,6 @@
 import React from "react";
 import { Col } from "react-bootstrap";
-
+import { Link } from "react-router-dom";
 import styles from "./Block.module.scss";
 
 const Block = props => {
@@ -14,11 +14,23 @@ const Block = props => {
           height="150"
         />
         {/* <a href="#"> */}
-        <p>{props.bookName}</p>
-        {/* </a> */}
-        {/* <a href="#"> */}
-        <p>{props.auther}</p>
-        {/* </a> */}
+        <Link
+          to={{
+            pathname: "/books/:bookId"
+            // search: '?sort=name',
+            // hash: '#the-hash',
+            // state: { fromDashboard: true }
+          }}
+        >
+          <p>book</p>
+        </Link>
+        <Link
+          to={{
+            pathname: "/authors/:authorId"
+          }}
+        >
+          <p>author</p>
+        </Link>
       </div>
     </Col>
   );

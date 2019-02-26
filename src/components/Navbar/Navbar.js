@@ -11,7 +11,7 @@ const navBar = props => {
     <>
       <header className="main-nav">
         <Navbar variant="light" expand="md">
-          <Navbar.Brand href="#home" className="main-nav__logo">
+          <Navbar.Brand className="main-nav__logo">
             <NavLink to="/" exact>
               <img
                 src={logo}

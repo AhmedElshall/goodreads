@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Tab, Container, Row, Col } from "react-bootstrap";
 
 //! components
@@ -7,54 +7,110 @@ import TableStructure from "./TableStructure/Table";
 
 import styles from "./BooksTable.module.scss";
 
-const booksTable = props => {
-  return (
-    <div className={styles.Tabs}>
-      <Container fluid>
-        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-          <Row>
-            <Col sm={3}>
-              {/* //! */}
-              <SideBar
-                allBooks={props.allBooks}
-                read={props.read}
-                currentlyRead={props.currentlyRead}
-                toRead={props.toRead}
-              />
-            </Col>
-            <Col sm={9}>
-              <Tab.Content className={styles.Tabs__content}>
-                <Tab.Pane eventKey="first">
-                  <h1>All Books Page</h1>
-                  {/* //! */}
-                  <TableStructure />
-                </Tab.Pane>
+class booksTable extends Component {
+  state = {
+    books: [
+      {
+        cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
+        name: "ktab",
+        author: "",
+        avgRate: 3,
+        rating: 5,
+        shelve: "read"
+      },
+      {
+        cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
+        name: "ktab",
+        author: "",
+        avgRate: 3,
+        rating: 5,
+        shelve: "current"
+      },
+      {
+        cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
+        name: "ktab",
+        author: "",
+        avgRate: 3,
+        rating: 5,
+        shelve: "toRead"
+      }
+    ],
+    bookState: "all"
+  };
+  allBooks = () => {
+    this.setState({ bookState: "all" });
+  };
+  read = () => {
+    this.setState({ bookState: "read" });
+  };
+  currentlyRead = () => {
+    this.setState({ bookState: "current" });
+  };
+  toRead = () => {
+    this.setState({ bookState: "toRead" });
+  };
 
-                <Tab.Pane eventKey="second">
-                  <h1>Read Page</h1>
-                  {/* //! */}
-                  <TableStructure />
-                </Tab.Pane>
+  render() {
+    return (
+      <div className={styles.Tabs}>
+        <Container fluid>
+          <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Row>
+              <Col sm={3}>
+                {/* //! */}
+                <SideBar
+                  allBooks={this.allBooks}
+                  read={this.read}
+                  currentlyRead={this.currentlyRead}
+                  toRead={this.toRead}
+                />
+              </Col>
+              <Col sm={9}>
+                <Tab.Content className={styles.Tabs__content}>
+                  <Tab.Pane eventKey="first">
+                    <h1>All Books Page</h1>
+                    {/* //! */}
+                    <TableStructure
+                      books={[...this.state.books]}
+                      bookState={this.state.bookState}
+                    />
+                  </Tab.Pane>
 
-                <Tab.Pane eventKey="third">
-                  <h1>Currently Reading Page</h1>
-                  {/* //! */}
-                  <TableStructure />
-                </Tab.Pane>
+                  <Tab.Pane eventKey="second">
+                    <h1>Read Page</h1>
+                    {/* //! */}
+                    <TableStructure
+                      books={[...this.state.books]}
+                      bookState={this.state.bookState}
+                    />
+                  </Tab.Pane>
 
-                <Tab.Pane eventKey="fourth">
-                  <h1>Want to Read Page</h1>
-                  {/* //! */}
-                  <TableStructure />
-                </Tab.Pane>
-              </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
-      </Container>
-    </div>
-  );
-};
+                  <Tab.Pane eventKey="third">
+                    <h1>Currently Reading Page</h1>
+                    {/* //! */}
+                    <TableStructure
+                      books={[...this.state.books]}
+                      bookState={this.state.bookState}
+                    />
+                  </Tab.Pane>
+
+                  <Tab.Pane eventKey="fourth">
+                    <h1>Want to Read Page</h1>
+                    {/* //! */}
+                    <TableStructure
+                      books={[...this.state.books]}
+                      bookState={this.state.bookState}
+                    />
+                  </Tab.Pane>
+                </Tab.Content>
+              </Col>
+            </Row>
+          </Tab.Container>
+        </Container>
+      </div>
+    );
+  }
+}
 
 export default booksTable;
 
