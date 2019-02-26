@@ -41,6 +41,7 @@
       &.active {
         color: #fff;
         background-color: #3c2618;
+        transition: all 0.2s ease-in-out;
       }
     }
     &__collapsed {
