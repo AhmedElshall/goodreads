@@ -6,7 +6,8 @@ import User from "../../../containers/User/User";
 
 //! Pages
 import Categories from "../Categories/Categories";
-import CategoryItem from "../Categories/CategoryItem";
+// import CategoryItem from "../Categories/CategoryItem";
+import CategoriesPage from "../Categories/CategoriesPage";
 import Books from "../Books/Books";
 import BookItem from "../Books/BookItem";
 import Authors from "../Authors/Authors";
@@ -29,7 +30,8 @@ const homePage = props => {
           <Route path="/categories" exact component={Categories} />
           <Route
             path="/categories/:categoryId"
-            render={() => <CategoryItem />}
+            render={() => <CategoriesPage />}
+            // render={() => <CategoryItem />}
           />
           {/* <Route path="/books/:bookId" component={BookItem} /> */}
           <Route path="/books" exact component={Books} />

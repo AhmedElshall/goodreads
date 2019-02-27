@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-import axios from "axios";
+// import axios from "axios";
 
 //! component
 import Block from "./Block/Block";
@@ -8,29 +8,47 @@ import Block from "./Block/Block";
 class Blocks extends Component {
   state = {
     blocks: [
-      // { id: 1, bookName: "ktab 7yaty ya 3eni", auther: "hasan el asmer" },
-      // { id: 2, bookName: "madinat el baha2em", auther: "mostafa ali" },
-      // { id: 3, bookName: "kitab 3", auther: "ay name" }
+      {
+        authorId: "authorId1",
+        bookName: "ktab1",
+        authorName: "author1",
+        bookId: "bookId1",
+        cover: "cover1"
+      },
+      {
+        authorId: "authorId2",
+        bookName: "ktab2",
+        authorName: "author2",
+        bookId: "bookId2",
+        cover: "cover2"
+      },
+      {
+        authorId: "authorId3",
+        bookName: "ktab3",
+        authorName: "author3",
+        bookId: "bookId3",
+        cover: "cover3"
+      }
     ],
     errorsInServer: false
   };
 
-  componentDidMount() {
-    axios
-      .get("/posts")
-      .then(respnse => {
-        const blocks = respnse.data.slice(0, 8);
-        const updatedBlocks = blocks.map(block => {
-          return { ...block, author: "mostafa ali" };
-        });
-        this.setState({ blocks: updatedBlocks });
-        console.log(respnse);
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ errorsInServer: true });
-      });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get("/posts")
+  //     .then(respnse => {
+  //       const blocks = respnse.data.slice(0, 8);
+  //       const updatedBlocks = blocks.map(block => {
+  //         return { ...block, author: "mostafa ali" };
+  //       });
+  //       this.setState({ blocks: updatedBlocks });
+  //       console.log(respnse);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //       this.setState({ errorsInServer: true });
+  //     });
+  // }
 
   render() {
     let blocks = (
@@ -39,7 +57,13 @@ class Blocks extends Component {
     if (!this.state.errorsInServer) {
       blocks = this.state.blocks.map(block => {
         return (
-          <Block key={block.id} bookName={block.title} auther={block.body} />
+          <Block
+            bookName={block.bookName}
+            authorName={block.authorName}
+            authorId={block.authorId}
+            bookId={block.bookId}
+            cover={block.cover}
+          />
         );
       });
     }

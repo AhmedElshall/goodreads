@@ -3,9 +3,9 @@ import React, { Component } from "react";
 
 import LoginPage from "../../Pages/User/LoginPage/LoginPage";
 import AllBooksPage from "../../Pages/User/HomePage/AllBooksPage/AllBooksPage";
-import ReadPage from "../../Pages/User/HomePage/ReadPage/ReadPage";
-import CurrentlyReadPage from "../../Pages/User/HomePage/CurrentlyReadPage/CurrentlyReadPage";
-import WantToReadPage from "../../Pages/User/HomePage/WantToReadPage/WantToReadPage";
+// import ReadPage from "../../Pages/User/HomePage/ReadPage/ReadPage";
+// import CurrentlyReadPage from "../../Pages/User/HomePage/CurrentlyReadPage/CurrentlyReadPage";
+// import WantToReadPage from "../../Pages/User/HomePage/WantToReadPage/WantToReadPage";
 
 class User extends Component {
   state = {
