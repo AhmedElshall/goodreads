@@ -1,8 +1,10 @@
 import React from "react";
 
+//! containers
+import Blocks from "../../../containers/User/Blocks";
+
 //! components
 import Navbar from "../../../components/Navbar/Navbar";
-import Blocks from "../../../components/UserPages/Blocks/Blocks";
 
 const books = props => {
   return (

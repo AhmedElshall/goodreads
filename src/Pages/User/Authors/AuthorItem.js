@@ -8,7 +8,7 @@ const authorItem = props => {
     <>
       <Navbar />
       <main className="main-padding">
-        <h1>Book Item Page</h1>
+        <h1>Author Item Page</h1>
       </main>
     </>
   );

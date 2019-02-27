@@ -3,7 +3,7 @@ import { Container, Row } from "react-bootstrap";
 // import axios from "axios";
 
 //! component
-import Block from "./Block/Block";
+import Block from "../../components/UserPages/Block/Block";
 
 class Blocks extends Component {
   state = {
