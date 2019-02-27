@@ -14,12 +14,11 @@ const login = props => {
       <Form className={styles.MyForm} onSubmit={props.onSubmit}>
         <Form.Group as={Row} controlId="formHorizontalEmail">
           <Form.Label column sm={2}>
-            {" "}
-            User Name{" "}
+            User Name
           </Form.Label>
           <Col sm={8}>
             <Form.Control
-              required
+              // required
               name="username"
               type="text"
               placeholder="Enter Your Name"
@@ -34,7 +33,7 @@ const login = props => {
           </Form.Label>
           <Col sm={8}>
             <Form.Control
-              required
+              // required
               type="password"
               placeholder="Password"
               onChange={props.onChangePassword}
