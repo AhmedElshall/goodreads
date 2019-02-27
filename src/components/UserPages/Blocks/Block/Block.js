@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styles from "./Block.module.scss";
 
 const Block = props => {
+  let bookUrl = "/books/:" + props.bookId;
+  let authorUrl = "/authors/:" + props.authorId;
   return (
     <Col md={3} sm={6}>
       <div className={styles.Block}>
@@ -13,10 +15,9 @@ const Block = props => {
           width="150"
           height="150"
         />
-        {/* <a href="#"> */}
         <Link
           to={{
-            pathname: "/books/:bookId"
+            pathname: bookUrl
             // search: '?sort=name',
             // hash: '#the-hash',
             // state: { fromDashboard: true }
@@ -26,7 +27,7 @@ const Block = props => {
         </Link>
         <Link
           to={{
-            pathname: "/authors/:authorId"
+            pathname: authorUrl
           }}
         >
           <p>author</p>
