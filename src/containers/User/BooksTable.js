@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { Tab, Container, Row, Col } from "react-bootstrap";
 
 //! components
-import SideBar from "./SideBar/Sidebar";
-import TableStructure from "./TableStructure/Table";
+import SideBar from "../../components/UserPages/BooksTable/SideBar/Sidebar";
+import TableStructure from "../../components/UserPages/BooksTable/TableStructure/Table";
 
-import styles from "./BooksTable.module.scss";
+import styles from "./User.module.scss";
 
 class booksTable extends Component {
   state = {
@@ -37,16 +37,16 @@ class booksTable extends Component {
     ],
     bookState: "all"
   };
-  allBooks = () => {
+  allBooksHandler = () => {
     this.setState({ bookState: "all" });
   };
-  read = () => {
+  readHandler = () => {
     this.setState({ bookState: "read" });
   };
-  currentlyRead = () => {
+  currentlyReadHandler = () => {
     this.setState({ bookState: "current" });
   };
-  toRead = () => {
+  toReadHandler = () => {
     this.setState({ bookState: "toRead" });
   };
 
@@ -59,10 +59,10 @@ class booksTable extends Component {
               <Col sm={3}>
                 {/* //! */}
                 <SideBar
-                  allBooks={this.allBooks}
-                  read={this.read}
-                  currentlyRead={this.currentlyRead}
-                  toRead={this.toRead}
+                  allBooks={this.allBooksHandler}
+                  read={this.readHandler}
+                  currentlyRead={this.currentlyReadHandler}
+                  toRead={this.toReadHandler}
                 />
               </Col>
               <Col sm={9}>
