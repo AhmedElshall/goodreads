@@ -10,8 +10,8 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    isAdmin: false,
-    isUser: true
+    isAdmin: true,
+    isUser: false
   };
 
   render() {
