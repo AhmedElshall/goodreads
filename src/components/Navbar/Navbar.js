@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Image } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import avatar from "../../assets/images/userAvatar.png";
+import { Button } from "react-bootstrap";
 
 import "./Navbar.scss";
 
@@ -47,6 +48,9 @@ const navBar = props => {
           </Form>
           <div className="user-avatar">
             <Image src={avatar} width="50" height="50" roundedCircle />
+            <Button onClick={props.logout} variant="success">
+              log out
+            </Button>
           </div>
           {/* </Navbar.Collapse> */}
         </Navbar>

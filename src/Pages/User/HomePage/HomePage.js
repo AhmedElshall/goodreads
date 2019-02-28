@@ -1,13 +1,15 @@
 import React from "react";
 
+//! container
+import BooksTable from "../../../containers/User/BooksTable";
+
 //! component
 import Navbar from "../../../components/Navbar/Navbar";
-import BooksTable from "../../../containers/User/BooksTable";
 
 const homePage = props => {
   return (
     <>
-      <Navbar />
+      <Navbar logout={props.logout} />
       <main>
         <BooksTable />
       </main>
