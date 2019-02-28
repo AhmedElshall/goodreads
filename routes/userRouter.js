@@ -3,47 +3,40 @@ const router = express.Router();
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const authenticate = require("../middleWare/authenticate");
+
 const multer = require("multer");
-const cloudinary = require("cloudinary");
-const cloudinaryStorage = require("multer-storage-cloudinary");
-var { authenticate } = require("../middleWare/authenticate");
 
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
-});
-const storage = cloudinaryStorage({
-  cloudinary: cloudinary,
-  folder: "demo",
-  allowedFormats: ["jpg", "png"],
-  transformation: [{ width: 500, height: 500, crop: "limit" }]
-});
-const parser = multer({ storage: storage });
-
-router.post("/photo", parser.single("photo"), (req, res) => {
-  console.log(req.file);
-  const photo = {};
-  photo.url = req.file.url;
-  photo.id = req.file.public_id;
-  User.photo
-    .create(photo)
-    .then(newphoto => res.json(newphoto))
-    .catch(err => console.log(err));
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "./uploads/");
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
 });
 
-router.get("/", (req, res) => {
-  //   User.find({}, (err, books) => {
-  //     if (!err) res.send(books);
-  //     else{
-  //         res.send("an error occured");
-  //     }
-  // });
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
 });
 
 //Login
 router.post("/login", (req, res) => {
-  var body = _.pick(req.body, ["email", "password"]);
+  const body = _.pick(req.body, ["email", "password"]);
+
   User.findByEmail(body.email, body.password)
     .then(user => {
       return user.generateAuthToken().then(token => {
@@ -51,77 +44,90 @@ router.post("/login", (req, res) => {
       });
     })
     .catch(e => {
-      res.status(400).send(e);
+      res.status(400).send("error");
     });
 });
 
 //signUP
-router.post("/create", (req, res) => {
-  var body = _.pick(req.body, ["firstName", "lastName", "email", "password"]);
-  var user = new User(body);
-  console.log(body);
+router.post("/create", upload.single("photo"), (req, res) => {
+  console.log(req.body);
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const password = req.body.password;
+  const photo = req.file.path;
+  const isadmin=req.body.isAdmin;
+  const user = new User({
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: password,
+    photo: photo,
+    isAdmin:isadmin
+  });
+
   user
     .save()
-    .then(success => {
-      console.log("token");
+    .then(() => {
       return user.generateAuthToken();
     })
     .then(token => {
-      console.log("token");
       res.header("x-auth", token).send(user);
-      //console.log("hjksdhdhk");
     })
     .catch(e => {
       res.status(400).send(e);
     });
 });
 
-// router.get('/me', authenticate, (req, res) => {
-//     res.send(req.user);
-//   });
+//Search
 
-// router.post('/:isAdmin', (req, res) => {
-//     const tfname = req.body.fname;
-//     const tlname = req.body.lname;
-//     const temail = req.body.email;
-//     const tpassword = req.body.password;
-//     const tphoto = req.body.photo;
-//     const tisAdmin = req.params.isAdmin;
-//     const user = new User({
-//         fname: tfname,
-//         lname: tlname,
-//         email: temail,
-//         password: tpassword,
-//         photo: tphoto,
-//         isAdmin: tisAdmin
-//     });
-//     user.save((err) => {
-//         if(!err) res.send("User was saved successfully");
-//         else res.send("Error while saving");
-//     });
-// });
+router.get('/search', authenticate,(req, res) => {
+  const input = req.body.name;
+  Book.find({name: input}, (err, book) => {
+      if(!err){
+        Author.find({firstName: input}, (err, author) => {
+          if(!err){
+            Catogry.find({name: input}, (err, category) => {
+              if(!err){
+                const obj = {
+                  books : book,
+                  authors: author,
+                  categories: category
+                }
+                res.send(obj);
+              } else {
+                res.send(err);
+              }
+            })
+          } else {
+            res.send(err);
+          }
+        })
+      } else{
+        res.send(err);
+      }
+  })
+  
+});
 
-// router.put('/:id',(req, res) => {
-//     const tfname = req.body.fname;
-//     const tlname = req.body.lname;
-//     const temail = req.body.email;
-//     const tpassword = req.body.password;
-//     const tphoto = req.body.photo;
-//     const id = req.params.id;
-//     User.updateOne({_id:id}, { $set: {fname: tfname, lname: tlname, email: temail, password: tpassword, photo: tphoto} }, (err) => {
-//         if(!err) res.send("Updated Successfully");
-//         else res.send("Failed to update");
-//     })
-// })
 
-// router.delete('/:id', (req, res) => {
-//     const id = req.params.id;
-//     User.deleteOne({ _id: id }, (err) => {
-//         if (!err) res.send('Deleted Successfully');
-//         else{
-//             res.send("Error Occured");
-//         }
-//     })
-// })
+
+
+
+
+//logout
+router.delete("/logout", authenticate, (req, res) => {
+   console.log("ahmed");
+  req.user.removeToken(req.token).then(
+    () => {
+     
+      res.status(200).send("User Logout Successfully");
+    },
+    () => {
+       
+      res.status(400).send("Error");
+    }
+  );
+});
 
 module.exports = router;

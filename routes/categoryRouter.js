@@ -5,6 +5,7 @@ const Admin = require("../models/userModel");
 const Catogry = require("../models/categoryModel");
 const Book = require("../models/booksModel");
 const Author = require("../models/authorsModel");
+const authenticate = require("../middleWare/authenticate");
 
 router.get("/", (req, res) => {
   Catogry.find({}, (err, cats) => {

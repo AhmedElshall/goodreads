@@ -5,6 +5,8 @@ const Admin = require("../models/userModel");
 const Catogry = require("../models/categoryModel");
 const Book = require("../models/booksModel");
 const Author = require("../models/authorsModel");
+const authenticate = require("../middleWare/authenticate");
+
 
 router.get("/", (req, res) => {
   Author.find({}, (err, authors) => {
@@ -15,14 +17,39 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  Author.findById(id, (err, Author) => {
-    if (!err) res.send(Author);
-    else {
-      res.send("an error occured");
-    }
-  });
+router.get('/', authenticate, (req, res) => {
+    Author.find({}, (err, authors) => {
+        if (!err) res.send(authors);
+        else{
+            res.send("an error occured");
+        }
+    });
 });
+
+
+router.get('/:id', authenticate,(req, res) => {
+    const authorId1 = req.params.id;
+    Author.findById(authorId1, (err, data) => {
+        if(!err) {
+            Book.find({authId: authorId1}, (err, output) => {
+                if(!err){
+                    const obj = {
+                        authName: data.firstName + data.lastName,
+                        authImg:data.photo,
+                        dateOfBirth: data.dateOfBirth,
+                    }
+                    res.send(obj);
+                }
+            })
+        }else{
+            res.send(err);
+        }
+    })
+})
+
+
+
+
+module.exports = router;
 
 module.exports = router;
