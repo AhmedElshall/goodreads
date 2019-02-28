@@ -3,6 +3,9 @@ const router = express.Router();
 const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const Book = require("../models/booksModel");
+const Author = require("../models/authorsModel");
+const Category = require("../models/categoryModel");
 const authenticate = require("../middleWare/authenticate");
 
 const multer = require("multer");
@@ -81,13 +84,15 @@ router.post("/create", upload.single("photo"), (req, res) => {
 
 //Search
 
-router.get('/search', authenticate,(req, res) => {
-  const input = req.body.name;
+router.get('/search/:name',(req, res) => {
+ 
+  const input = req.params.name;
+  
   Book.find({name: input}, (err, book) => {
       if(!err){
         Author.find({firstName: input}, (err, author) => {
           if(!err){
-            Catogry.find({name: input}, (err, category) => {
+            Category.find({name: input}, (err, category) => {
               if(!err){
                 const obj = {
                   books : book,
