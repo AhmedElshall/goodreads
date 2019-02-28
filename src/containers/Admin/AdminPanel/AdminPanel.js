@@ -71,7 +71,18 @@ class AdminPanel extends Component {
       booksShowed: false
     });
   };
-
+  // fetch("", {
+  //   method: "post",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: {
+  //     email: this.state.username,
+  //     password: this.state.password
+  //   }
+  // }).then(res =>
+  //   res
+  //     .json()
+  //     .then(test => this.setState({ isLogged: true, categsShowed: true }))
+  // );
   loginValidation = event => {
     console.log("10");
     this.setState({ isLogged: true });
@@ -86,10 +97,10 @@ class AdminPanel extends Component {
     console.log(this.state.username);
   };
 
-  // onChangePassword =(e)=>{
-  //   this.setState({password:e.target.value});
-  //   console.log(this.state.password);
-  // }
+  onChangePassword = e => {
+    this.setState({ password: e.target.value });
+    console.log(this.state.password);
+  };
 
   render() {
     if (!this.state.isLogged) {

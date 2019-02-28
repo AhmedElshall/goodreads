@@ -17,10 +17,10 @@ const Block = props => {
         />
         <Link
           to={{
-            pathname: bookUrl
+            pathname: bookUrl,
             // search: '?sort=name',
             // hash: '#the-hash',
-            // state: { fromDashboard: true }
+            state: { fromDashboard: true }
           }}
         >
           <p>book</p>

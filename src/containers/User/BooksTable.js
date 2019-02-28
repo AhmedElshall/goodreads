@@ -11,28 +11,29 @@ class booksTable extends Component {
   state = {
     books: [
       {
-        cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
-        name: "ktab",
-        author: "",
+        // cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
+        cover: "cover1",
+        name: "ktab1",
+        author: "Author1",
         avgRate: 3,
         rating: 5,
-        shelve: "read"
+        shelve: "Read"
       },
       {
-        cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
-        name: "ktab",
-        author: "",
+        cover: "cover2",
+        name: "ktab2",
+        author: "Author2",
         avgRate: 3,
         rating: 5,
-        shelve: "current"
+        shelve: "Currently Reading"
       },
       {
-        cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
-        name: "ktab",
-        author: "",
+        cover: "cover3",
+        name: "ktab3",
+        author: "Author3",
         avgRate: 3,
         rating: 5,
-        shelve: "toRead"
+        shelve: "Want to Read"
       }
     ],
     bookState: "all"
@@ -41,13 +42,13 @@ class booksTable extends Component {
     this.setState({ bookState: "all" });
   };
   readHandler = () => {
-    this.setState({ bookState: "read" });
+    this.setState({ bookState: "Read" });
   };
   currentlyReadHandler = () => {
-    this.setState({ bookState: "current" });
+    this.setState({ bookState: "Currently Reading" });
   };
   toReadHandler = () => {
-    this.setState({ bookState: "toRead" });
+    this.setState({ bookState: "Want to Read" });
   };
 
   render() {

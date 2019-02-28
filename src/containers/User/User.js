@@ -16,12 +16,19 @@ class User extends Component {
       loginShowed: false
     });
   };
+  logoutHandler = () => {
+    this.setState({
+      isLogged: false,
+      loginShowed: true
+    });
+  };
   /////////////////////////////////////////////////////////////////////
   //! form validation
   submitFormHandler = value => {
     console.log(value);
   };
-  /////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
+
   render() {
     //! user login page
     if (!this.state.isLogged) {
@@ -33,7 +40,7 @@ class User extends Component {
       );
     } else {
       //! user Homepage
-      return <HomePage />;
+      return <HomePage logout={this.logoutHandler} />;
     }
   }
 }
