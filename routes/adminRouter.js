@@ -1,16 +1,150 @@
 const express = require("express");
 const router = express.Router();
-
 const Admin = require("../models/userModel");
-const Catogry = require("../models/categoryModel");
-const Book = require("../models/booksModel");
+const Category = require("../models/categoryModel");
+const Books = require("../models/booksModel");
 const Author = require("../models/authorsModel");
-const User = require("../models/userModel");
+const Users = require("../models/userModel");
+const authenticate = require("../middleWare/authenticate");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "./uploads/");
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
+
+
+
+
+//////////////////////////////////
+
+let categoreyAll = [];
+let booksAll = [];
+let authorsAll = [];
+let isLogged = false;
+//////////////////////////////////////
+let getCategorey = function(req, res, next) {
+  Category.find({}, (err, categorey) => {
+    if (!err) {
+      if (categorey) {
+        categoreyAll = categorey;
+        if (categorey) console.log(categorey);
+        console.log(categorey);
+        //res.json([{categorey}]);
+      } else {
+        // res.json([{categorey}]);
+        console.log("not exist");
+      }
+    } else {
+      console.log("error in db");
+    }
+  });
+  next();
+};
+/////////////////////////////////
+let getBooks = function(req, res, next) {
+  Books.find({}, (err, books) => {
+    // console.log(JSON.stringify(err));
+    if (!err) {
+      if (books) {
+        if (books) console.log(books);
+        console.log(books);
+        booksAll = books;
+        //res.json([{books}]);
+      } else {
+        res.json([{ books }]);
+        //console.log("not exist");
+      }
+    } else {
+      res.json([{ books }]);
+      // console.log("error in db");
+    }
+  });
+  next();
+};
+////////////////////////////////////////
+let getAuthors = function(req, res, next) {
+  Author.find({}, (err, author) => {
+    // console.log(JSON.stringify(err));
+    if (!err) {
+      if (author) {
+        authorsAll = author;
+        if (author) console.log(author);
+        console.log(author);
+        //res.json([{categorey}]);
+      } else {
+        // res.json([{categorey}]);
+        console.log("not exist");
+      }
+    } else {
+      console.log("error in db");
+    }
+  });
+  next();
+};
+///////////////////////////////////////
+router.get("/", (req, res) => {});
+
+// router.post("/login", [getCategorey, getBooks, getAuthors], (req, res) => {
+//   const email = req.body.email;
+//   const password = req.body.password;
+
+//   console.log(req.body);
+//   Users.findOne({ email: email, password: password })
+//     .then(user => {
+//       if (user) {
+//         isLogged = true;
+//         return user.generateAuthToken().then(token => {
+//           res
+//             .header("x-auth", token)
+//             .json([
+//               { categorey: categoreyAll },
+//               { books: booksAll },
+//               { authors: authorsAll },
+//               { isLogged: isLogged }
+//             ]);
+//         });
+//       }
+//     })
+//     .catch(e => {
+//       res.status(400).send(e);
+//     });
+// });
+
+//////////////////////////////////
+
+
 
 router.post("/login", (req, res) => {
-  User.findByEmail(req.body.email, req.body.password)
+  Admin.findByEmail(req.body.email, req.body.password)
     .then(sucess => {
-      res.send("Sucess");
+       
+         if (sucess.isAdmin == true) {
+        res.send("sccuess");
+      } else {
+        res.send("wrong data");
+      }
     })
     .catch(error => {
       res.send("Error");
@@ -51,26 +185,11 @@ router.get("/authors", (req, res) => {
   });
 });
 
-// LOG IN ///
-router.post("/", (req, res) => {
-  const _email = req.body.email;
-  const _password = req.body.password;
-  Admin.find({ email: _email }, (err, admin) => {
-    if (!err) {
-      if (admin.isAdmin == true && admin.password == _password) {
-        res.send(admin);
-      } else {
-        res.send("wrong data");
-      }
-    } else {
-      res.send("admin not found check again ");
-    }
-  });
-});
 
-router.post("/book", (req, res) => {
+
+router.post("/book", upload.single("photo"),(req, res) => {
   const bookName = req.body.name;
-  const bookPhoto = req.body.photo;
+  const bookPhoto = req.file.path;
   const CatId = req.body.catId;
   const AuthId = req.body.authId;
   const book = new Book({
@@ -87,12 +206,13 @@ router.post("/book", (req, res) => {
   });
 });
 
-router.post("/category/add", (req, res) => {
+router.post("/category", (req, res) => {
   const name1 = req.body.name;
-  const catogry = new Catogry({
+  console.log(name1);
+  const category = new Category({
     name: name1
   });
-  catogry.save(err => {
+  category.save(err => {
     if (!err) res.send("category was saved");
     else {
       res.send("an error occured");
@@ -100,27 +220,18 @@ router.post("/category/add", (req, res) => {
   });
 });
 
-router.post("/author", (req, res) => {
+router.post("/author", upload.single("photo") ,(req, res) => {
   const fname = req.body.firstName;
   const lname = req.body.lastName;
   const dataofbirth = req.body.dataOfBirth;
-  const image = req.body.photo;
+  const image = req.file.path;
   const author = new Author({
     firstName: fname,
     lastName: lname,
     dataOfBirth: dataofbirth,
     photo: image
   });
-  /*
-  author.save()
-    .then(sucess => {
-      res.send("author was saved");
-    })
-    .catch(() => {
-      res.send("an error occured");
-    });
-
-    */
+  
   author.save(err => {
     if (!err) res.send("author was saved");
     else {
