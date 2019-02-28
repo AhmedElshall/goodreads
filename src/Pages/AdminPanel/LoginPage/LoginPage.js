@@ -18,7 +18,7 @@ const login = props => {
           </Form.Label>
           <Col sm={8}>
             <Form.Control
-              // required
+              required
               name="username"
               type="text"
               placeholder="Enter Your Name"
@@ -33,7 +33,7 @@ const login = props => {
           </Form.Label>
           <Col sm={8}>
             <Form.Control
-              // required
+              required
               type="password"
               placeholder="Password"
               onChange={props.onChangePassword}

@@ -30,7 +30,7 @@ class login extends Component {
   //! form
   form = props => {
     return (
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={props.newUserSubmit}>
         <h5>New here? Create a free account!</h5>
         <Form.Group>
           <Field
@@ -145,21 +145,37 @@ class login extends Component {
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Form inline className="ml-auto">
+                <Form
+                  inline
+                  className="ml-auto"
+                  onSubmit={this.props.loginSubmit}
+                >
                   <FormControl
                     type="email"
                     placeholder="Email Address"
                     className="mr-sm-2"
+                    name="username"
+                    onChange={this.props.onChangeUserName}
                   />
                   <FormControl
                     type="password"
                     placeholder="Password"
                     className="mr-sm-2"
+                    name="password"
+                    onChange={this.props.onChangePassword}
                   />
-                  <Button onClick={this.props.logged} variant="success">
+                  <Button type="submit" variant="success">
                     Sign in
                   </Button>
                 </Form>
+                {/* <form onSubmit={this.props.loginSubmit}>
+                  <input type="email" onChange={this.props.onChangeUserName} />
+                  <input
+                    type="password"
+                    onChange={this.props.onChangePassword}
+                  />
+                  <button type="submit">sign in</button>
+                </form> */}
               </Navbar.Collapse>
             </Container>
           </Navbar>

@@ -71,35 +71,37 @@ class AdminPanel extends Component {
       booksShowed: false
     });
   };
-  // fetch("", {
-  //   method: "post",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: {
-  //     email: this.state.username,
-  //     password: this.state.password
-  //   }
-  // }).then(res =>
-  //   res
-  //     .json()
-  //     .then(test => this.setState({ isLogged: true, categsShowed: true }))
-  // );
+
   loginValidation = event => {
-    console.log("10");
-    this.setState({ isLogged: true });
-    this.setState({ categsShowed: true });
+    fetch("http://localhost:4000/admin/login", {
+      method: "post",
+
+      body: {
+        email: this.state.username,
+        password: this.state.password
+      }
+    })
+      .then(res => res.json())
+      .then(admin => {
+        this.setState({ isLogged: true, categsShowed: true });
+        console.log(admin);
+      });
+    // console.log("10");
+    // this.setState({ isLogged: true });
+    // this.setState({ categsShowed: true });
     event.preventDefault();
   };
 
   onChangeUserName = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     const temp = e.target.value;
     this.setState({ username: temp });
-    console.log(this.state.username);
+    // console.log(this.state.username);
   };
 
   onChangePassword = e => {
     this.setState({ password: e.target.value });
-    console.log(this.state.password);
+    // console.log(this.state.password);
   };
 
   render() {
