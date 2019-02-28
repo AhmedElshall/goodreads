@@ -5,10 +5,10 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 //! my imports
-import axios from "axios";
+// import axios from "axios";
 
 //! only if the same URL we are dealing with
-axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
+// axios.defaults.baseURL = "https://jsonplaceholder.typicode.com";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
