@@ -9,33 +9,33 @@ import styles from "./User.module.scss";
 
 class booksTable extends Component {
   state = {
-    books: [
-      {
-        // cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
-        cover: "cover1",
-        name: "ktab1",
-        author: "Author1",
-        avgRate: 3,
-        rating: 5,
-        shelve: "Read"
-      },
-      {
-        cover: "cover2",
-        name: "ktab2",
-        author: "Author2",
-        avgRate: 3,
-        rating: 5,
-        shelve: "Currently Reading"
-      },
-      {
-        cover: "cover3",
-        name: "ktab3",
-        author: "Author3",
-        avgRate: 3,
-        rating: 5,
-        shelve: "Want to Read"
-      }
-    ],
+    // books: [
+    //   {
+    //     // cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
+    //     cover: "cover1",
+    //     name: "ktab1",
+    //     author: "Author1",
+    //     avgRate: 3,
+    //     rating: 5,
+    //     shelve: "Read"
+    //   },
+    //   {
+    //     cover: "cover2",
+    //     name: "ktab2",
+    //     author: "Author2",
+    //     avgRate: 3,
+    //     rating: 5,
+    //     shelve: "Currently Reading"
+    //   },
+    //   {
+    //     cover: "cover3",
+    //     name: "ktab3",
+    //     author: "Author3",
+    //     avgRate: 3,
+    //     rating: 5,
+    //     shelve: "Want to Read"
+    //   }
+    // ],
     bookState: "all"
   };
   allBooksHandler = () => {
@@ -72,7 +72,8 @@ class booksTable extends Component {
                     <h1>All Books Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={[...this.state.books]}
+                      books={this.props.books}
+                      // books={[...this.state.books]}
                       bookState={this.state.bookState}
                     />
                   </Tab.Pane>
@@ -81,7 +82,8 @@ class booksTable extends Component {
                     <h1>Read Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={[...this.state.books]}
+                      books={this.props.books}
+                      // books={[...this.state.books]}
                       bookState={this.state.bookState}
                     />
                   </Tab.Pane>
@@ -90,7 +92,8 @@ class booksTable extends Component {
                     <h1>Currently Reading Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={[...this.state.books]}
+                      books={this.props.books}
+                      // books={[...this.state.books]}
                       bookState={this.state.bookState}
                     />
                   </Tab.Pane>
@@ -99,7 +102,8 @@ class booksTable extends Component {
                     <h1>Want to Read Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={[...this.state.books]}
+                      books={this.props.books}
+                      // books={[...this.state.books]}
                       bookState={this.state.bookState}
                     />
                   </Tab.Pane>
