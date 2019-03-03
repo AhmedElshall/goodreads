@@ -11,7 +11,7 @@ const homePage = props => {
     <>
       <Navbar logout={props.logout} />
       <main>
-        <BooksTable />
+        <BooksTable books={props.books} />
       </main>
     </>
   );

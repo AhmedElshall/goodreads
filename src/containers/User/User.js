@@ -9,7 +9,8 @@ class User extends Component {
     isLogged: false,
     loginShowed: true,
     username: "",
-    password: ""
+    password: "",
+    books: []
   };
 
   isLoggedHandler = () => {
@@ -53,8 +54,12 @@ class User extends Component {
     })
       .then(res => res.json())
       .then(admin => {
-        this.setState({ isLogged: true, loginShowed: false });
-        console.log(admin);
+        this.setState({
+          isLogged: true,
+          loginShowed: false,
+          books: [...admin[1].boooks]
+        });
+        console.log(this.state.books);
       });
     event.preventDefault();
   };
@@ -80,7 +85,9 @@ class User extends Component {
       );
     } else {
       //! user Homepage
-      return <HomePage logout={this.logoutHandler} />;
+      return (
+        <HomePage logout={this.logoutHandler} books={[...this.state.books]} />
+      );
     }
   }
 }
