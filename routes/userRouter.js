@@ -56,14 +56,14 @@ router.post("/create", upload.single("photo"), (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const photo = req.file.path;
-  const isadmin=req.body.isAdmin;
+  const isadmin = req.body.isAdmin;
   const user = new User({
     firstName: firstName,
     lastName: lastName,
     email: email,
     password: password,
     photo: photo,
-    isAdmin:isadmin
+    isAdmin: isadmin
   });
 
   user
@@ -81,50 +81,75 @@ router.post("/create", upload.single("photo"), (req, res) => {
 
 //Search
 
-router.get('/search', authenticate,(req, res) => {
-  const input = req.body.name;
-  Book.find({name: input}, (err, book) => {
-      if(!err){
-        Author.find({firstName: input}, (err, author) => {
-          if(!err){
-            Catogry.find({name: input}, (err, category) => {
-              if(!err){
-                const obj = {
-                  books : book,
-                  authors: author,
-                  categories: category
-                }
-                res.send(obj);
-              } else {
-                res.send(err);
-              }
-            })
-          } else {
-            res.send(err);
-          }
-        })
-      } else{
-        res.send(err);
-      }
-  })
-  
+// <<<<<<< Updated upstream
+// router.get('/search', authenticate,(req, res) => {
+//   const input = req.body.name;
+//   Book.find({name: input}, (err, book) => {
+//       if(!err){
+//         Author.find({firstName: input}, (err, author) => {
+//           if(!err){
+//             Catogry.find({name: input}, (err, category) => {
+//               if(!err){
+//                 const obj = {
+//                   books : book,
+//                   authors: author,
+//                   categories: category
+//                 }
+//                 res.send(obj);
+//               } else {
+//                 res.send(err);
+//               }
+//             })
+//           } else {
+//             res.send(err);
+//           }
+//         })
+//       } else{
+//         res.send(err);
+//       }
+//   })
+
+// });
+
+// =======
+router.get("/search/:name", authenticate, (req, res) => {
+  const input = req.params.name;
+  // >>>>>>> Stashed changes
+
+  Book.find({ name: input }, (err, book) => {
+    if (!err) {
+      Author.find({ firstName: input }, (err, author) => {
+        if (!err) {
+          Category.find({ name: input }, (err, category) => {
+            if (!err) {
+              const obj = {
+                books: book,
+                authors: author,
+                categories: category
+              };
+              res.send(obj);
+            } else {
+              res.send(err);
+            }
+          });
+        } else {
+          res.send(err);
+        }
+      });
+    } else {
+      res.send(err);
+    }
+  });
 });
-
-
-
-
-
 
 //logout
 router.delete("/logout", authenticate, (req, res) => {
-   console.log("ahmed");
+  console.log("ahmed");
   req.user.removeToken(req.token).then(
     () => {
-     
       res.status(200).send("User Logout Successfully");
     },
     () => {
-       
       res.status(400).send("Error");
     }
   );

@@ -151,7 +151,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/category", (req, res) => {
+router.get("/category",authenticate ,(req, res) => {
   Catogry.find({}, (err, cats) => {
     if (!err) {
       var catMap = { value: "", label: "" };
@@ -168,7 +168,7 @@ router.get("/category", (req, res) => {
   });
 });
 
-router.get("/books", (req, res) => {
+router.get("/books", authenticate,(req, res) => {
   Book.find({}, (err, books) => {
     if (!err) res.send(books);
     else {
@@ -176,7 +176,7 @@ router.get("/books", (req, res) => {
     }
   });
 });
-router.get("/authors", (req, res) => {
+router.get("/authors", authenticate,(req, res) => {
   Author.find({}, (err, authors) => {
     if (!err) res.send(authors);
     else {
@@ -187,7 +187,7 @@ router.get("/authors", (req, res) => {
 
 
 
-router.post("/book", upload.single("photo"),(req, res) => {
+router.post("/book",authenticate ,upload.single("photo"),(req, res) => {
   const bookName = req.body.name;
   const bookPhoto = req.file.path;
   const CatId = req.body.catId;
@@ -206,7 +206,7 @@ router.post("/book", upload.single("photo"),(req, res) => {
   });
 });
 
-router.post("/category", (req, res) => {
+router.post("/category", authenticate ,(req, res) => {
   const name1 = req.body.name;
   console.log(name1);
   const category = new Category({
@@ -220,7 +220,7 @@ router.post("/category", (req, res) => {
   });
 });
 
-router.post("/author", upload.single("photo") ,(req, res) => {
+router.post("/author", authenticate ,upload.single("photo") ,(req, res) => {
   const fname = req.body.firstName;
   const lname = req.body.lastName;
   const dataofbirth = req.body.dataOfBirth;
@@ -239,7 +239,7 @@ router.post("/author", upload.single("photo") ,(req, res) => {
     }
   });
 });
-router.get("/book/:id", (req, res) => {
+router.get("/book/:id", authenticate, (req, res) => {
   const bookName = req.body.name;
   const catId = req.body.catId;
   const authId = req.body.authId;
@@ -257,7 +257,7 @@ router.get("/book/:id", (req, res) => {
   );
 });
 
-router.get("/category/:id", (req, res) => {
+router.get("/category/:id", authenticate, (req, res) => {
   const name = req.body.name;
   const id = req.params.id;
   Catogry.updateOne({ _id: id }, { $set: { name: name } }, err => {
@@ -268,7 +268,7 @@ router.get("/category/:id", (req, res) => {
   });
 });
 
-router.get("/author/:id", (req, res) => {
+router.get("/author/:id", authenticate, (req, res) => {
   const fname = req.body.firstName;
   const lname = req.body.lastName;
   const dataOfBirth = req.body.dataOfBirth;
@@ -293,7 +293,7 @@ router.get("/author/:id", (req, res) => {
   );
 });
 
-router.get("/book/:id", (req, res) => {
+router.get("/book/:id", authenticate ,(req, res) => {
   const id = req.params.id;
   Book.deleteOne({ _id: id }, err => {
     if (!err) res.send("Book Deleted");
@@ -313,7 +313,7 @@ router.delete("/category/:id", (req, res) => {
   });
 });
 
-router.delete("/author/:id", (req, res) => {
+router.delete("/author/:id", authenticate, (req, res) => {
   const id = req.params.id;
   Author.deleteOne({ _id: id }, err => {
     if (!err) res.send("author Deleted");

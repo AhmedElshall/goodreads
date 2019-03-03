@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   Author.find({}, (err, authors) => {
     if (!err) res.send(authors);
     else {
-      res.send("an error occured");
+      res.send("Error");
     }
   });
 });
@@ -21,7 +21,7 @@ router.get('/', authenticate, (req, res) => {
     Author.find({}, (err, authors) => {
         if (!err) res.send(authors);
         else{
-            res.send("an error occured");
+            res.send("Error");
         }
     });
 });
@@ -49,7 +49,5 @@ router.get('/:id', authenticate,(req, res) => {
 
 
 
-
-module.exports = router;
 
 module.exports = router;
