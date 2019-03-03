@@ -7,7 +7,7 @@ const Book = require("../models/booksModel");
 const Author = require("../models/authorsModel");
 const authenticate = require("../middleWare/authenticate");
 
-router.get("/", (req, res) => {
+router.get("/", authenticate, (req, res) => {
   Catogry.find({}, (err, cats) => {
     if (!err) res.send(cats);
     else {
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", authenticate, (req, res) => {
   const id = req.params.id;
   Catogry.findById(id, (err, cat) => {
     if (!err) res.send(cat);
