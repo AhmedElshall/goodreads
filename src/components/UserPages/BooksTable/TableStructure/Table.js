@@ -29,8 +29,9 @@ const table = props => {
             name={book.name}
             author={book.author}
             avgRate={book.avgRate}
-            rating={book.avgRate}
+            rating={book.rating}
             shelve={book.shelve}
+            toRate={props.toRate}
           />
         ))}
       </tbody>
