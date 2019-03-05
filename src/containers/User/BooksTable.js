@@ -9,33 +9,33 @@ import styles from "./User.module.scss";
 
 class booksTable extends Component {
   state = {
-    // books: [
-    //   {
-    //     // cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
-    //     cover: "cover1",
-    //     name: "ktab1",
-    //     author: "Author1",
-    //     avgRate: 3,
-    //     rating: 5,
-    //     shelve: "Read"
-    //   },
-    //   {
-    //     cover: "cover2",
-    //     name: "ktab2",
-    //     author: "Author2",
-    //     avgRate: 3,
-    //     rating: 5,
-    //     shelve: "Currently Reading"
-    //   },
-    //   {
-    //     cover: "cover3",
-    //     name: "ktab3",
-    //     author: "Author3",
-    //     avgRate: 3,
-    //     rating: 5,
-    //     shelve: "Want to Read"
-    //   }
-    // ],
+    books: [
+      {
+        // cover: "http://www.nretnil.com/avatar/LawrenceEzekielAmos.png",
+        cover: "cover1",
+        name: "ktab1",
+        author: "Author1",
+        avgRate: 3,
+        rating: 2,
+        shelve: "Read"
+      },
+      {
+        cover: "cover2",
+        name: "ktab2",
+        author: "Author2",
+        avgRate: 3,
+        rating: 5,
+        shelve: "Currently Reading"
+      },
+      {
+        cover: "cover3",
+        name: "ktab3",
+        author: "Author3",
+        avgRate: 3,
+        rating: 4,
+        shelve: "Want to Read"
+      }
+    ],
     bookState: "all"
   };
   allBooksHandler = () => {
@@ -49,6 +49,15 @@ class booksTable extends Component {
   };
   toReadHandler = () => {
     this.setState({ bookState: "Want to Read" });
+  };
+
+  onStarClick = (nextValue, prevValue, name) => {
+    // const personIndex = this.state.persons.findIndex(p => {
+    //   return p.id === personId;
+    // });
+    // const updatedBooks = [...this.state.book]
+    this.setState({ rating: nextValue });
+    console.log(this.state.books);
   };
 
   render() {
@@ -72,9 +81,10 @@ class booksTable extends Component {
                     <h1>All Books Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={this.props.books}
-                      // books={[...this.state.books]}
+                      // books={this.props.books}
+                      books={[...this.state.books]}
                       bookState={this.state.bookState}
+                      toRate={() => this.onStarClick(this)}
                     />
                   </Tab.Pane>
 
@@ -82,9 +92,10 @@ class booksTable extends Component {
                     <h1>Read Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={this.props.books}
-                      // books={[...this.state.books]}
+                      // books={this.props.books}
+                      books={[...this.state.books]}
                       bookState={this.state.bookState}
+                      toRate={() => this.onStarClick(this)}
                     />
                   </Tab.Pane>
 
@@ -92,9 +103,10 @@ class booksTable extends Component {
                     <h1>Currently Reading Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={this.props.books}
-                      // books={[...this.state.books]}
+                      // books={this.props.books}
+                      books={[...this.state.books]}
                       bookState={this.state.bookState}
+                      toRate={() => this.onStarClick(this)}
                     />
                   </Tab.Pane>
 
@@ -102,9 +114,10 @@ class booksTable extends Component {
                     <h1>Want to Read Page</h1>
                     {/* //! */}
                     <TableStructure
-                      books={this.props.books}
-                      // books={[...this.state.books]}
+                      // books={this.props.books}
+                      books={[...this.state.books]}
                       bookState={this.state.bookState}
+                      toRate={() => this.onStarClick(this)}
                     />
                   </Tab.Pane>
                 </Tab.Content>

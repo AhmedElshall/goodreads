@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const statusSchema = new mongoose.Schema({
-  status:[{type: String, enum: ['Read', 'Want To Read', 'Currently Reading']}],
+  status:[{type: String, enum: ['1', '2', '3']}],
   bookId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Book" }],
   userId: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
 });
