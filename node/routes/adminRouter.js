@@ -7,6 +7,15 @@ const Author = require("../models/authorsModel");
 const Users = require("../models/userModel");
 const authenticate = require("../middleWare/authenticate");
 const multer = require("multer");
+const mongoose = require("mongoose");
+/////////////////////
+
+const Status = require("../models/statusModel");
+const User = require("../models/userModel");
+const BOOKS = require("../models/booksModel");
+const Rates = require("../models/ratesModel");
+const Authors = require("../models/authorsModel");
+///////////////
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -34,9 +43,97 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+//////////////////////////////////////////////
 
+/////////////////////////////
+/////////////////////////////////////
 
+let data = {
+  photo: "",
+  bookName: "",
+  bookId: 0,
+  status: "1",
+  authorName: "",
+  authorId: 0,
+  ratte: 0,
+  rateId: 0
+};
+let books = [];
+let authors = [];
+let rates = [];
+let state = [];
 
+//db.status.find({userId:[ObjectId("5c73116ed37ae01d2481cc1f")]})
+function getall(id, callback) {
+  Status.find({ userId: [mongoose.Types.ObjectId(id)] })
+    .populate({ path: "bookId" })
+    .exec(function(err, all) {
+      //  console.log(all[0].userId.firstName);
+      //console.log(all);
+      //authorsaa=global.authorsaa;
+      all.map(objectofStatus => {
+        books.push(objectofStatus.bookId);
+        // books=objectofStatus.bookId;
+        //callback();
+      });
+      //console.log(books)
+      books.map(book => {
+        //console.log(book[0].authId);
+
+        if (book[0].authId.length != 0) {
+          // console.log(book[0].authId[0] + "hhhhhhhhhhhhhhhhhhhhhhhh");
+
+          BOOKS.find({ authId: book[0].authId[0] })
+            .populate({ path: "authId" })
+            .exec(function(err, allAuthor) {
+              //console.log(book[0].authId[0]);
+
+              //console.log(allAuthor[0].authId);
+              console.log(allAuthor.authId);
+
+              //authors=allAuthor;
+
+              authors.push(allAuthor[0].authId);
+              console.log(book[0]._id);
+              //db.rates.find({bookId:[ObjectId("5c73c7e51a1eed2efa894214")],userId:[ObjectId("5c73116ed37ae01d2481cc1f")]})
+
+              Rates.find(
+                { bookId: [book[0]._id], userId: [id] },
+                (err, allrates) => {
+                  //console.log(allrates);
+
+                  rates.push(allrates);
+                  callback();
+                }
+              );
+              //console.log(allAuthor[0].authId);
+              //callback();
+            });
+
+          // console.log(book);
+
+          //callback();
+        }
+      });
+      callback();
+      //console.log(authors);
+
+      // books.map(book=>{
+      // //console.log(typeof book.name);
+
+      // //    Rates.find({bookId:[mongoose.Types.ObjectId(book.id)]}).populate({path:'userId'}).exec(function(err,AllRates){
+
+      // //  //console.log(allAuthor);
+      // //  rates.push(AllRates);
+      // //   console.log(AllRates);
+      // //  data.photo=book.photo;
+      // //  data.bookName=book.name;
+      // //    });
+
+      // })
+    });
+}
+///////////////////////////////////////////
 //////////////////////////////////
 
 let categoreyAll = [];
@@ -134,16 +231,65 @@ router.get("/", (req, res) => {});
 
 //////////////////////////////////
 
-
-
 router.post("/login", (req, res) => {
-  Admin.findByEmail(req.body.email, req.body.password)
+  console.log(req.body.email);
+  Admin.findOne({ email: req.body.email, password: req.body.password })
+
     .then(sucess => {
-       
-         if (sucess.isAdmin == true) {
+      console.log(sucess.id);
+      var id = sucess.id;
+      if (sucess.isAdmin == true) {
         res.send("sccuess");
       } else {
-        res.send("wrong data");
+        // res.send("wrong data");
+        //////////////////
+        getall(id, function() {
+          console.log(authors);
+          //  console.log(rates);
+          // console.log(books);
+          books.forEach(book => {
+            book.forEach(boo => {
+              if (book[0].length != 0) {
+                data.bookName = boo.name;
+                data.photo = boo.photo;
+                data.bookId = boo.id;
+                if (data.status == "1") data.status = "All";
+                // console.log(boo.id + "uuuuuuuuuuuuuuuuuuuuuuuuuu");
+              }
+            });
+          });
+          authors.forEach(author => {
+            console.log(author);
+
+            author.forEach(auth => {
+              data.authorName = auth.firstName + " " + auth.lastName;
+              data.authorId = auth.id;
+              console.log(data.authorName);
+            });
+          });
+          console.log(rates.length);
+
+          rates.forEach(rate => {
+            rate.forEach(rat => {
+              if (rate.length != 0) {
+                data.ratte = rat.rate;
+                data.rateId = rat.id;
+                //console.log(data.ratte);
+                // console.log(rate.rate);
+                state.push(data);
+                console.log(state);
+                res.json(state);
+              } else {
+                data.ratte = rat.rate;
+                data.rateId = rat.id;
+                //console.log(data.ratte);
+                // console.log(rate.rate);
+              }
+            });
+          });
+        });
+
+        ///////////////////
       }
     })
     .catch(error => {
@@ -151,7 +297,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/category",authenticate ,(req, res) => {
+router.get("/category", authenticate, (req, res) => {
   Catogry.find({}, (err, cats) => {
     if (!err) {
       var catMap = { value: "", label: "" };
@@ -168,7 +314,7 @@ router.get("/category",authenticate ,(req, res) => {
   });
 });
 
-router.get("/books", authenticate,(req, res) => {
+router.get("/books", authenticate, (req, res) => {
   Book.find({}, (err, books) => {
     if (!err) res.send(books);
     else {
@@ -176,7 +322,7 @@ router.get("/books", authenticate,(req, res) => {
     }
   });
 });
-router.get("/authors", authenticate,(req, res) => {
+router.get("/authors", authenticate, (req, res) => {
   Author.find({}, (err, authors) => {
     if (!err) res.send(authors);
     else {
@@ -185,9 +331,7 @@ router.get("/authors", authenticate,(req, res) => {
   });
 });
 
-
-
-router.post("/book",authenticate ,upload.single("photo"),(req, res) => {
+router.post("/book", authenticate, upload.single("photo"), (req, res) => {
   const bookName = req.body.name;
   const bookPhoto = req.file.path;
   const CatId = req.body.catId;
@@ -206,7 +350,7 @@ router.post("/book",authenticate ,upload.single("photo"),(req, res) => {
   });
 });
 
-router.post("/category", authenticate ,(req, res) => {
+router.post("/category", authenticate, (req, res) => {
   const name1 = req.body.name;
   console.log(name1);
   const category = new Category({
@@ -220,7 +364,7 @@ router.post("/category", authenticate ,(req, res) => {
   });
 });
 
-router.post("/author", authenticate ,upload.single("photo") ,(req, res) => {
+router.post("/author", authenticate, upload.single("photo"), (req, res) => {
   const fname = req.body.firstName;
   const lname = req.body.lastName;
   const dataofbirth = req.body.dataOfBirth;
@@ -231,7 +375,7 @@ router.post("/author", authenticate ,upload.single("photo") ,(req, res) => {
     dataOfBirth: dataofbirth,
     photo: image
   });
-  
+
   author.save(err => {
     if (!err) res.send("author was saved");
     else {
@@ -293,7 +437,7 @@ router.get("/author/:id", authenticate, (req, res) => {
   );
 });
 
-router.get("/book/:id", authenticate ,(req, res) => {
+router.get("/book/:id", authenticate, (req, res) => {
   const id = req.params.id;
   Book.deleteOne({ _id: id }, err => {
     if (!err) res.send("Book Deleted");

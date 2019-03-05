@@ -6,7 +6,7 @@ import BookItem from "../BookItem/BookItem";
 const table = props => {
   let renderedBooks = [];
   renderedBooks =
-    props.bookState === "all"
+    props.bookState === "All"
       ? [...props.books]
       : props.books.filter(book => book.shelve === props.bookState);
   return (
@@ -25,12 +25,12 @@ const table = props => {
         {renderedBooks.map((book, index) => (
           <BookItem
             key={index.toString()}
-            cover={book.cover}
-            name={book.name}
-            author={book.author}
-            avgRate={book.avgRate}
-            rating={book.rating}
-            shelve={book.shelve}
+            cover={book.photo}
+            name={book.bookName}
+            author={book.authorName}
+            avgRate={book.ratte}
+            rating={book.ratte}
+            shelve={book.status}
             toRate={props.toRate}
           />
         ))}
