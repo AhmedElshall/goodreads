@@ -34,72 +34,75 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+
+
+
 //////////////////////////////////
 
-// var categoreyAll = [];
-// var booksAll ;
-// let authorsAll = [];
+let categoreyAll = [];
+let booksAll = [];
+let authorsAll = [];
 let isLogged = false;
 //////////////////////////////////////
-// let getCategorey = function(req, res, next) {
-//   Category.find({}, (err, categorey) => {
-//     if (!err) {
-//       if (categorey) {
-//         categoreyAll = categorey;
-//         if (categorey) console.log(categorey);
-//         console.log(categorey);
-//         //res.json([{categorey}]);
-//       } else {
-//         // res.json([{categorey}]);
-//         console.log("not exist");
-//       }
-//     } else {
-//       console.log("error in db");
-//     }
-//   });
-//   next();
-// };
+let getCategorey = function(req, res, next) {
+  Category.find({}, (err, categorey) => {
+    if (!err) {
+      if (categorey) {
+        categoreyAll = categorey;
+        if (categorey) console.log(categorey);
+        console.log(categorey);
+        //res.json([{categorey}]);
+      } else {
+        // res.json([{categorey}]);
+        console.log("not exist");
+      }
+    } else {
+      console.log("error in db");
+    }
+  });
+  next();
+};
 /////////////////////////////////
-// let getBooks = function(req, res, next) {
-//   Books.find({}, (err, books) => {
-//     // console.log(JSON.stringify(err));
-//     if (!err) {
-//       if (books) {
-//         if (books) console.log(books);
-//         console.log(books);
-//         booksAll = books;
-//         //res.json([{books}]);
-//       } else {
-//         res.json([{ books }]);
-//         //console.log("not exist");
-//       }
-//     } else {
-//       res.json([{ books }]);
-//       // console.log("error in db");
-//     }
-//   });
-//   next();
-// };
+let getBooks = function(req, res, next) {
+  Books.find({}, (err, books) => {
+    // console.log(JSON.stringify(err));
+    if (!err) {
+      if (books) {
+        if (books) console.log(books);
+        console.log(books);
+        booksAll = books;
+        //res.json([{books}]);
+      } else {
+        res.json([{ books }]);
+        //console.log("not exist");
+      }
+    } else {
+      res.json([{ books }]);
+      // console.log("error in db");
+    }
+  });
+  next();
+};
 ////////////////////////////////////////
-// let getAuthors = function(req, res, next) {
-//   Author.find({}, (err, author) => {
-//     // console.log(JSON.stringify(err));
-//     if (!err) {
-//       if (author) {
-//         authorsAll = author;
-//         if (author) console.log(author);
-//         console.log(author);
-//         //res.json([{categorey}]);
-//       } else {
-//         // res.json([{categorey}]);
-//         console.log("not exist");
-//       }
-//     } else {
-//       console.log("error in db");
-//     }
-//   });
-//   next();
-// };
+let getAuthors = function(req, res, next) {
+  Author.find({}, (err, author) => {
+    // console.log(JSON.stringify(err));
+    if (!err) {
+      if (author) {
+        authorsAll = author;
+        if (author) console.log(author);
+        console.log(author);
+        //res.json([{categorey}]);
+      } else {
+        // res.json([{categorey}]);
+        console.log("not exist");
+      }
+    } else {
+      console.log("error in db");
+    }
+  });
+  next();
+};
 ///////////////////////////////////////
 router.get("/", (req, res) => {});
 
@@ -131,93 +134,25 @@ router.get("/", (req, res) => {});
 
 //////////////////////////////////
 
+
+
 router.post("/login", (req, res) => {
-  console.log(req.body.email);
-   //console.log("not exist");
-    var booksAll=[];
-    var categoreyAll=[];
-  Admin.find({email:req.body.email, password:req.body.password})
+  Admin.findByEmail(req.body.email, req.body.password)
     .then(sucess => {
-      /////////////////
-     Books.find({}, (err, books) => {
-        // console.log(JSON.stringify(err));
-       // console.log(books);
-        if (!err) {
-          if (books) {
-           booksAll = books;
-           // console.log(booksAll)
-             //res.json([{ msg: "success" },{ boooks: booksAll}]);
-            //res.json([{ books }]);
-          } else {
-            //res.json([{ books }]);
-            console.log("not exist");
-          }
-        } else {
-          // res.json([{ books }]);
-
-          console.log("error in db");
-        }
-      });
-     
-///////////////////////
- Category.find({}, (err, categorey) => {
-    if (!err) {
-      if (categorey) {
-        categoreyAll = categorey;
-        console.log(booksAll);
-        res.json([{ msg: "success" },{ boooks: booksAll},{ categories: categorey}]);
-        //console.log(categorey);
-        //res.json([{categorey}]);
+       
+         if (sucess.isAdmin == true) {
+        res.send("sccuess");
       } else {
-        // res.json([{categorey}]);
-        console.log("not exist");
+        res.send("wrong data");
       }
-    } else {
-      console.log("error in db");
-    }
-  });
-      ////////////////
-
-// console.log(categoreyAll);
-      
-      //////////////////
-     // if (sucess.isAdmin == true) {
-       // res.json([{ msg: "sccuess" }, { boooks: booksAll }]);
-      //} else {
-       // res.send("wrong data");
-      //}
     })
     .catch(error => {
-
-        Books.find({}, (err, books) => {
-        // console.log(JSON.stringify(err));
-        console.log(books);
-        if (!err) {
-          if (books) {
-           var booksAll = books;
-            console.log(booksAll)
-             res.json([{ msg: "error" },{ boooks: booksAll}]);
-            //res.json([{ books }]);
-          } else {
-            //res.json([{ books }]);
-            console.log("not exist");
-          }
-        } else {
-          // res.json([{ books }]);
-
-          console.log("error in db");
-        }
-      });
-      
+      res.send("Error");
     });
 });
 
-/////////////////////////////
-
- 
-//////////////////////////
-router.get("/category", (req, res) => {
-  Category.find({}, (err, cats) => {
+router.get("/category",authenticate ,(req, res) => {
+  Catogry.find({}, (err, cats) => {
     if (!err) {
       var catMap = { value: "", label: "" };
       var cat = [];
@@ -233,15 +168,15 @@ router.get("/category", (req, res) => {
   });
 });
 
-router.get("/books", (req, res) => {
-  Books.find({}, (err, books) => {
+router.get("/books", authenticate,(req, res) => {
+  Book.find({}, (err, books) => {
     if (!err) res.send(books);
     else {
       res.send("an error occured");
     }
   });
 });
-router.get("/authors", (req, res) => {
+router.get("/authors", authenticate,(req, res) => {
   Author.find({}, (err, authors) => {
     if (!err) res.send(authors);
     else {
@@ -250,12 +185,14 @@ router.get("/authors", (req, res) => {
   });
 });
 
-router.post("/book", upload.single("photo"), (req, res) => {
+
+
+router.post("/book",authenticate ,upload.single("photo"),(req, res) => {
   const bookName = req.body.name;
   const bookPhoto = req.file.path;
   const CatId = req.body.catId;
   const AuthId = req.body.authId;
-  const book = new Books({
+  const book = new Book({
     name: bookName,
     photo: bookPhoto,
     catId: CatId,
@@ -269,7 +206,7 @@ router.post("/book", upload.single("photo"), (req, res) => {
   });
 });
 
-router.post("/category", (req, res) => {
+router.post("/category", authenticate ,(req, res) => {
   const name1 = req.body.name;
   console.log(name1);
   const category = new Category({
@@ -283,7 +220,7 @@ router.post("/category", (req, res) => {
   });
 });
 
-router.post("/author", upload.single("photo"), (req, res) => {
+router.post("/author", authenticate ,upload.single("photo") ,(req, res) => {
   const fname = req.body.firstName;
   const lname = req.body.lastName;
   const dataofbirth = req.body.dataOfBirth;
@@ -294,7 +231,7 @@ router.post("/author", upload.single("photo"), (req, res) => {
     dataOfBirth: dataofbirth,
     photo: image
   });
-
+  
   author.save(err => {
     if (!err) res.send("author was saved");
     else {
@@ -302,15 +239,15 @@ router.post("/author", upload.single("photo"), (req, res) => {
     }
   });
 });
-router.get("/book/:id", (req, res) => {
+router.get("/book/:id", authenticate, (req, res) => {
   const bookName = req.body.name;
   const catId = req.body.catId;
   const authId = req.body.authId;
   const image = req.body.photo;
   const id = req.params.id;
-  Books.updateOne(
+  Book.updateOne(
     { _id: id },
-    { $set: { name: bookName, catId: catId, authId: authId, image: image } },
+    { $set: { name: name, catId: catId, authId: authId, image: image } },
     err => {
       if (!err) res.send("Book updated!");
       else {
@@ -320,10 +257,10 @@ router.get("/book/:id", (req, res) => {
   );
 });
 
-router.get("/category/:id", (req, res) => {
+router.get("/category/:id", authenticate, (req, res) => {
   const name = req.body.name;
   const id = req.params.id;
-  Category.updateOne({ _id: id }, { $set: { name: name } }, err => {
+  Catogry.updateOne({ _id: id }, { $set: { name: name } }, err => {
     if (!err) res.send("category updated!");
     else {
       res.send("an error occured");
@@ -331,7 +268,7 @@ router.get("/category/:id", (req, res) => {
   });
 });
 
-router.get("/author/:id", (req, res) => {
+router.get("/author/:id", authenticate, (req, res) => {
   const fname = req.body.firstName;
   const lname = req.body.lastName;
   const dataOfBirth = req.body.dataOfBirth;
@@ -356,9 +293,9 @@ router.get("/author/:id", (req, res) => {
   );
 });
 
-router.get("/book/:id", (req, res) => {
+router.get("/book/:id", authenticate ,(req, res) => {
   const id = req.params.id;
-  Books.deleteOne({ _id: id }, err => {
+  Book.deleteOne({ _id: id }, err => {
     if (!err) res.send("Book Deleted");
     else {
       res.send("an error occured");
@@ -368,7 +305,7 @@ router.get("/book/:id", (req, res) => {
 
 router.delete("/category/:id", (req, res) => {
   const id = req.params.id;
-  Category.deleteOne({ _id: id }, err => {
+  Catogry.deleteOne({ _id: id }, err => {
     if (!err) res.send("category Deleted");
     else {
       res.send("an error occured");
@@ -376,7 +313,7 @@ router.delete("/category/:id", (req, res) => {
   });
 });
 
-router.delete("/author/:id", (req, res) => {
+router.delete("/author/:id", authenticate, (req, res) => {
   const id = req.params.id;
   Author.deleteOne({ _id: id }, err => {
     if (!err) res.send("author Deleted");
